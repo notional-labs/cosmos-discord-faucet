@@ -19,7 +19,7 @@ disc_log = logging.getLogger('discord')
 disc_log.setLevel(logging.CRITICAL)
 
 # Configure Logging
-logging.basicConfig(level=logging.INFO,
+logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s %(levelname)s %(message)s')
 
 # Load config
@@ -57,8 +57,10 @@ HELP_MSG = '**List of available commands:**\n' \
     '5. Request the address balance:\n' \
     '`$balance [cosmos address]`'
 
-
+# intents = discord.Intents.default()
+# intents.message_content = True
 client = discord.Client()
+
 
 
 async def save_transaction_statistics(transaction: str):
@@ -317,6 +319,8 @@ async def on_ready():
     Gets called when the Discord client logs in
     """
     logging.info('Logged into Discord as %s', client.user)
+    intent = discord.Intents.default()
+    print(intent)
 
 
 @client.event
@@ -324,6 +328,8 @@ async def on_message(message):
     """
     Responds to messages on specified channels.
     """
+
+    print("hoank", message)
     # Only listen in specific channels, and do not listen to your own messages
     if (message.channel.name not in LISTENING_CHANNELS) or (message.author == client.user):
         return
@@ -333,7 +339,7 @@ async def on_message(message):
         await message.reply(HELP_MSG)
         return
 
-    testnet = testnets['theta']
+    testnet = testnets['migaloo']
     # Dispatch message to appropriate handler
     if message.content.startswith('$faucet_address'):
         await message.reply(f'The {testnet["name"]} faucet has address'

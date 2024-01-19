@@ -13,9 +13,9 @@ import logging
 
 def check_address(address: str):
     """
-    gaiad keys parse <address>
+    migalood keys parse <address>
     """
-    check = subprocess.run(["gaiad", "keys", "parse",
+    check = subprocess.run(["migalood", "keys", "parse",
                             f"{address}",
                             '--output=json'],
                            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
@@ -35,9 +35,9 @@ def check_address(address: str):
 
 def get_balance(address: str, node: str, chain_id: str):
     """
-    gaiad query bank balances <address> <node> <chain-id>
+    migalood query bank balances <address> <node> <chain-id>
     """
-    balance = subprocess.run(["gaiad", "query", "bank", "balances",
+    balance = subprocess.run(["migalood", "query", "bank", "balances",
                               f"{address}",
                               f"--node={node}",
                               f"--chain-id={chain_id}",
@@ -59,10 +59,10 @@ def get_balance(address: str, node: str, chain_id: str):
 
 def get_node_status(node: str):
     """
-    gaiad status <node>
+    migalood status <node>
     """
     status = subprocess.run(
-        ['gaiad', 'status', f'--node={node}'],
+        ['migalood', 'status', f'--node={node}'],
         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
     try:
@@ -85,9 +85,9 @@ def get_node_status(node: str):
 
 def get_tx_info(hash_id: str, node: str, chain_id: str):
     """
-    gaiad query tx <tx-hash> <node> <chain-id>
+    migalood query tx <tx-hash> <node> <chain-id>
     """
-    tx_gaia = subprocess.run(['gaiad', 'query', 'tx',
+    tx_gaia = subprocess.run(['migalood', 'query', 'tx',
                               f'{hash_id}',
                               f'--node={node}',
                               f'--chain-id={chain_id}',
@@ -132,12 +132,12 @@ def tx_send(request: dict):
     - "fees"
     - "node"
     - "chain_id"
-    gaiad tx bank send <from address> <to address> <amount>
+    migalood tx bank send <from address> <to address> <amount>
                        <fees> <node> <chain-id>
                        --keyring-backend=test -y
 
     """
-    tx_gaia = subprocess.run(['gaiad', 'tx', 'bank', 'send',
+    tx_gaia = subprocess.run(['migalood', 'tx', 'bank', 'send',
                               f'{request["sender"]}',
                               f'{request["recipient"]}',
                               f'{request["amount"]}',
